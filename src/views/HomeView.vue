@@ -54,7 +54,9 @@
       bottom
     </div>
 
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas">
+      <img src="https://rb.gy/9ikyic" alt="">
+    </canvas>
 
   </div>
 </template>
@@ -65,6 +67,7 @@ import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/out
 import image from '@/assets/tshirt.jpg'
 
 let canvas
+let rect
 export default {
   name: 'HomeView',
   components: {
@@ -79,39 +82,89 @@ export default {
     canvas = new fabric.Canvas('canvas',{
         // width: 950,
         // height: 550,
-        backgroundColor: '#FFF',
-        preserveObjectStacking: true,
+        backgroundColor: 'white',
+        // preserveObjectStacking: true,
         // isDrawingMode: true,
         // overlayColor: {
         //   source: 'http://fabricjs.com/assets/escheresque_ste.png'
         // },
 
-        controlsAboveOverlay : true
+        controlsAboveOverlay : true,
+        // overlayColor: {
+        //   source: image,
+        // }
     })
     fabric.Object.prototype.transparentCorners = false
 
-    fabric.Image.fromURL(image, function (img) {
-      console.log(img.width, img.height)
-      img.scale(0.5).set({
-        left: 100,
-        top: 100,
-      })
-      img.scaleToWidth(300, false)
 
-      canvas.insertAt(img, 0)
-      canvas.setWidth(img.width)
-      canvas.setHeight(img.height)
+    fabric.Image.fromURL(image, function (img) {
+      console.log(img)
+
+      const width = img.width
+      const height = img.height
+
+      // img.centeredScaling = true
+      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+        scaleX: 1,
+        scaleY: 1
+      })
+      // img.scale(0.5).set({
+      //   // left: 100,
+      //   // top: 100,
+      // })
+      // img.scaleToWidth(300, false)
+
+      // canvas.insertAt(img, 0)
+      canvas.setWidth(width)
+      canvas.setHeight(height)
+
+      rect = new fabric.Rect({
+          top : width/5,
+          left : height/4,
+          width : width/2,
+          height : height/2,
+          // fill: 'rgba(0, 0, 0, 0)',
+          // selectable: false,
+          // stroke: 'rgba(0,255,0,1)',
+          // strokeWidth: 1,
+          // evented: false
+      })
+      canvas.clipPath = rect
+      // canvas.add(rect)
+      // canvas.centerObject(rect)
     })
 
-    // const rect = new fabric.Rect({
-    //     top : 100,
-    //     left : 100,
-    //     width : 60,
-    //     height : 70,
-    //     fill : 'red',
-    //     selection: false
+    // fabric.Image.fromURL(image,function(img) { 
+    //   // oImg.globalCompositeOperation = 'source-atop';
+    //   // oImg.width = canvas.width;
+    //   // oImg.heigth = canvas.height;
+    //   // canvas.add(oImg);
+    //   // var rect = new fabric.Rect({
+    //   //   width: 200,
+    //   //   height: 200,
+    //   //   globalCompositeOperation: 'destination-over',
+    //   //   fill: 'black'
+    //   // });
+    //   // canvas.add(rect);  
+      
+    //   canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+    //     scaleX: canvas.width / img.width,
+    //     scaleY: canvas.height / img.height
+    //   })
     // })
-    // canvas.add(rect)
+
+    const rectObj = new fabric.Rect({
+        top : 100,
+        left : 100,
+        width : 60,
+        height : 70,
+        fill : 'red',
+        selection: false,
+        centeredRotation: true,
+        clipPath: rect
+    })
+    canvas.add(rectObj)
+    canvas.centerObject(rectObj)
 
     // canvas.setZoom(5)
 
@@ -146,7 +199,7 @@ export default {
   }
 
   canvas {
-    margin: 149px 0px 88px 526px;
+    margin: 109px 0px 88px 526px;
   }
 
   .sidebar-button {
