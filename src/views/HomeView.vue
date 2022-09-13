@@ -26,7 +26,7 @@
               <PhotoIcon/>
             </div>
             <div class="sidebar-text">
-              Text
+              Image
             </div>
           </button>
 
