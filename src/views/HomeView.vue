@@ -38,6 +38,8 @@
             <div class="studio-panel-content studio-text-panel-content">
               <h1 class="panel-title">Title Panel</h1>
               <p class="panel-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+              <button @click="addRect">click</button>
             </div>
 
           </div>
@@ -89,11 +91,14 @@ export default {
         selection: false
     })
     canvas.add(rect)
-
-    canvas.add(
-      new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#234' }),
-    )
-
+  },
+  methods: {
+    addRect() {
+      console.log(canvas)
+      canvas.add(
+        new fabric.Rect({ top: Math.random()*100, left: Math.random()*100, width: 50, height: 50, fill: '#234' }),
+      )
+    }
   }
 }
 </script>
