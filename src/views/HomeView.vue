@@ -46,18 +46,19 @@
       </div>
     </div>
 
-    <div class="right-container">
-      right
-    </div>
+    <div class="right-container"></div>
 
     <div class="bottom-container">
       bottom
     </div>
 
+    <canvas id="canvas" class="canvas" width="500" height="300"></canvas>
+
   </div>
 </template>
 
 <script>
+import { fabric } from "fabric";
 import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/outline'
 
 export default {
@@ -65,6 +66,19 @@ export default {
   components: {
     ChatBubbleBottomCenterTextIcon,
     PhotoIcon
+  },
+  mounted() {
+    const canvas = new fabric.Canvas('canvas');
+
+    const rect = new fabric.Rect({
+        top : 100,
+        left : 100,
+        width : 60,
+        height : 70,
+        fill : 'red'
+    });
+
+    canvas.add(rect);
   }
 }
 </script>
@@ -73,6 +87,13 @@ export default {
 
   body {
       background-color: #f8f8f8!important;
+  }
+
+  .canvas {
+    transform: scale(1);
+    margin: 179px 0px 88px 426px;
+    width: calc(100vw - 426px);
+    height: calc(100vh - 267px);
   }
 
   .sidebar-button {
