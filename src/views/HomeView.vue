@@ -36,7 +36,8 @@
           <div class="floating-sidebar-panel button-icon-visibility">
             
             <div class="studio-panel-content studio-text-panel-content">
-              asdsa
+              <h1 class="panel-title">Title Panel</h1>
+              <p class="panel-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
             </div>
 
           </div>
@@ -222,7 +223,7 @@ export default {
           .studio-panel-content {
               padding-bottom: 0;
           }
-          
+
           .studio-text-panel-content {
             height: auto;
             overflow-y: auto;
@@ -231,6 +232,24 @@ export default {
 
         .button-icon-visibility {
           max-height: calc(100vh - 90px - 56px - 52px - 0px - 40px);
+        }
+
+        .panel-title {
+          font-size: 1rem;
+          line-height: 1.5;
+          font-weight: 700;
+          letter-spacing: -.01em;
+          margin-bottom: 0;
+          padding-bottom: 8px;
+        }
+
+        .panel-desc {
+          font-size: 0.778rem;
+          line-height: 1.5;
+          letter-spacing: -.01em;
+          color: #666666;
+          margin-bottom: 0;
+          margin-top: 0;
         }
       }
     }
