@@ -62,13 +62,14 @@
 <script>
 import { fabric } from "fabric";
 import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+import image from '@/assets/tshirt.jpg'
 
 let canvas
 export default {
   name: 'HomeView',
   components: {
     ChatBubbleBottomCenterTextIcon,
-    PhotoIcon
+    PhotoIcon,
   },
   data() {
     return {
@@ -76,26 +77,56 @@ export default {
   },
   mounted() {
     canvas = new fabric.Canvas('canvas',{
-        width: 950,
-        height: 550,
+        // width: 950,
+        // height: 550,
         backgroundColor: '#FFF',
+        preserveObjectStacking: true,
+        // isDrawingMode: true,
         // overlayColor: {
         //   source: 'http://fabricjs.com/assets/escheresque_ste.png'
         // },
+
+        controlsAboveOverlay : true
     })
     fabric.Object.prototype.transparentCorners = false
 
-    const rect = new fabric.Rect({
-        top : 100,
-        left : 100,
-        width : 60,
-        height : 70,
-        fill : 'red',
-        selection: false
+    fabric.Image.fromURL(image, function (img) {
+      console.log(img.width, img.height)
+      img.scale(0.5).set({
+        left: 100,
+        top: 100,
+      })
+      img.scaleToWidth(300, false)
+
+      canvas.insertAt(img, 0)
+      canvas.setWidth(img.width)
+      canvas.setHeight(img.height)
     })
-    canvas.add(rect)
+
+    // const rect = new fabric.Rect({
+    //     top : 100,
+    //     left : 100,
+    //     width : 60,
+    //     height : 70,
+    //     fill : 'red',
+    //     selection: false
+    // })
+    // canvas.add(rect)
 
     // canvas.setZoom(5)
+
+  //   canvas.setOverlayColor({
+  //     source: 'rgba(255, 73, 64, 0.6)',
+  //     offsetX: 200,
+  // offsetY: 100
+  //   }, canvas.renderAll.bind(canvas));
+
+    // canvas.setDimensions({
+    //   width: 100,
+    //   height: 100,
+    // }, {
+    //   cssOnly: true
+    // })
   },
   methods: {
     addRect() {
