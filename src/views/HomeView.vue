@@ -78,7 +78,10 @@ export default {
     canvas = new fabric.Canvas('canvas',{
         width: 950,
         height: 550,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        // overlayColor: {
+        //   source: 'http://fabricjs.com/assets/escheresque_ste.png'
+        // },
     })
     fabric.Object.prototype.transparentCorners = false
 
@@ -91,6 +94,8 @@ export default {
         selection: false
     })
     canvas.add(rect)
+
+    // canvas.setZoom(5)
   },
   methods: {
     addRect() {
