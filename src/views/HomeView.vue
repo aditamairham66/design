@@ -216,17 +216,17 @@ export default {
           //   height: calc(100vh - 251px);
           // }
 
+          .add-sheet-panel 
+          .studio-image-panel-content, 
+          .floating-sidebar-panel 
+          .studio-panel-content {
+              padding-bottom: 0;
+          }
+          
           .studio-text-panel-content {
             height: auto;
             overflow-y: auto;
           }
-        }
-
-        .add-sheet-panel 
-        .studio-image-panel-content, 
-        .floating-sidebar-panel 
-        .studio-panel-content {
-            padding-bottom: 0;
         }
 
         .button-icon-visibility {
