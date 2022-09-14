@@ -55,7 +55,7 @@
     </div>
 
     <canvas id="canvas">
-      <img src="https://rb.gy/9ikyic" alt="">
+      <!-- <img src="https://rb.gy/9ikyic" alt=""> -->
     </canvas>
 
   </div>
@@ -67,7 +67,8 @@ import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/out
 import image from '@/assets/tshirt.jpg'
 
 let canvas
-let rect
+// let rect
+// let ctx
 export default {
   name: 'HomeView',
   components: {
@@ -118,21 +119,61 @@ export default {
       canvas.setWidth(width)
       canvas.setHeight(height)
 
-      rect = new fabric.Rect({
-          top : width/5,
-          left : height/4,
-          width : width/2,
-          height : height/2,
-          // fill: 'rgba(0, 0, 0, 0)',
-          // selectable: false,
-          // stroke: 'rgba(0,255,0,1)',
-          // strokeWidth: 1,
-          // evented: false
+      const boundingBox = new fabric.Rect({
+        fill: "white",
+        width: width/2,
+        height: height/2,
+        hasBorders: false,
+        hasControls: false,
+        lockMovementX: true,
+        lockMovementY: true,
+        evented: false,
+        stroke: "red"
       })
-      canvas.clipPath = rect
-      // canvas.add(rect)
-      // canvas.centerObject(rect)
+      canvas.add(boundingBox)
+      canvas.centerObject(boundingBox)
+
+      canvas.on('object:moving', (e) => {
+        var obj = e.target;
+
+        obj.set({
+          top: Math.min(Math.max(obj.top, 0), boundingBox.height - boundingBox.height),
+          left: Math.min(Math.max(obj.left, 0), boundingBox.width - boundingBox.width),
+        })
+        obj.setCoords();
+      });
+
+      // rect = new fabric.Rect({
+      //     top : width/5,
+      //     left : height/4,
+      //     width : width/2,
+      //     height : height/2,
+      //     // fill: 'rgba(0, 0, 0, 0)',
+      //     // selectable: false,
+      //     // stroke: 'rgba(0,255,0,1)',
+      //     // strokeWidth: 1,
+      //     // evented: false
+      // })
+      // canvas.clipPath = rect
+      // // canvas.add(rect)
+      // // canvas.centerObject(rect)
+
+
+      // canvas.on("mouse:down", function () {
+      //   // ctx = canvas.getContext("2d");
+      //   // ctx.beginPath();
+      //   // ctx.rect(
+      //   //   width/4, 60, width/2, 390
+      //   // ); //specify bounded rectangle
+      //   // ctx.closePath();
+      //   // ctx.clip();
+      //   // ctx.save();
+      // })
     })
+
+    // canvas.on("mouse : up",function(){
+    //   ctx.restore(); //restore the context
+    // })
 
     // fabric.Image.fromURL(image,function(img) { 
     //   // oImg.globalCompositeOperation = 'source-atop';
@@ -153,18 +194,16 @@ export default {
     //   })
     // })
 
-    const rectObj = new fabric.Rect({
-        top : 100,
-        left : 100,
-        width : 60,
-        height : 70,
-        fill : 'red',
-        selection: false,
-        centeredRotation: true,
-        clipPath: rect
-    })
-    canvas.add(rectObj)
-    canvas.centerObject(rectObj)
+    // const rectObj = new fabric.Rect({
+    //     top : 100,
+    //     left : 100,
+    //     width : 60,
+    //     height : 70,
+    //     fill : 'red'
+    //     // clipPath: rect
+    // })
+    // canvas.add(rectObj)
+    // canvas.centerObject(rectObj)
 
     // canvas.setZoom(5)
 
@@ -183,10 +222,12 @@ export default {
   },
   methods: {
     addRect() {
-      console.log(canvas)
+      // console.log(canvas)
+      const obj = new fabric.Rect({ top: Math.random()*100, left: Math.random()*100, width: 50, height: 50, fill: '#234' })
       canvas.add(
-        new fabric.Rect({ top: Math.random()*100, left: Math.random()*100, width: 50, height: 50, fill: '#234' }),
+        obj
       )
+      canvas.centerObject(obj)
     }
   }
 }
