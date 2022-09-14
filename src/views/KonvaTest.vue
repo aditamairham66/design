@@ -58,7 +58,7 @@
 
         <v-stage :config="configKonva">
             <v-layer>
-                <v-circle :config="configCircle" draggable="true"></v-circle>
+                <v-circle :config="configCircle"></v-circle>
             </v-layer>
         </v-stage>
     </div>
@@ -66,6 +66,7 @@
 
 <script>
 import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+// import tshirt from '@/assets/tshirt.jpg'
 
 export default {
     name: 'konvaTest',
@@ -80,12 +81,13 @@ export default {
                 height: window.innerHeight
             },
             configCircle: {
-                x: 800,
-                y: 300,
+                x: window.innerWidth - 200,
+                y: 200,
                 radius: 70,
                 fill: "red",
                 stroke: "black",
-                strokeWidth: 4
+                strokeWidth: 4,
+                draggable: true
             }
         }
     }
