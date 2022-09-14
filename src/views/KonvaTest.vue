@@ -58,7 +58,11 @@
 
         <v-stage :config="configKonva">
             <v-layer>
-                <v-circle :config="configCircle"></v-circle>
+                <!-- <v-circle :config="configCircle"></v-circle> -->
+
+                <v-rect
+                    :config="rectConfig"
+                />
             </v-layer>
         </v-stage>
     </div>
@@ -81,13 +85,23 @@ export default {
                 height: window.innerHeight
             },
             configCircle: {
-                x: window.innerWidth - 200,
-                y: 200,
+                x: window.innerWidth/2,
+                y: window.innerHeight/4,
                 radius: 70,
                 fill: "red",
                 stroke: "black",
                 strokeWidth: 4,
                 draggable: true
+            },
+            rectConfig: {
+                x: window.innerWidth/3,
+                y: window.innerHeight/5,
+                width: Math.abs(850),
+                height: Math.abs(850),
+                fill: 'rgb(0,0,0,0)',
+                stroke: 'black',
+                strokeWidth: 3,
+                draggable: true,
             }
         }
     }
@@ -99,10 +113,6 @@ export default {
   
     body {
         background: #f8f8f8 !important;
-    }
-
-    canvas {
-        margin: 109px 0px 88px 526px;
     }
   
     .sidebar-button {
