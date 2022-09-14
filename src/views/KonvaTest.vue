@@ -72,6 +72,7 @@
 <script>
 import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/outline'
 import Konva from 'konva';
+import image from '@/assets/tshirt.jpg'
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -100,7 +101,23 @@ export default {
             // },
         }
     },
+    created() {
+        
+    },
     mounted() {
+        const createImage = (source) => {
+            console.log(source)
+
+            const img = new Image()
+            img.src = source
+            setTimeout(() => {
+                img.onload = async () => {
+                // await img
+                return img
+            }
+            })
+        }
+
         const stage = new Konva.Stage({
             container: 'container',
             width: width,
@@ -115,7 +132,9 @@ export default {
             y: height/5,
             width: Math.abs(850),
             height: Math.abs(850),
-            fill: 'rgb(0,0,0,0)',
+            // fill: 'rgb(0,0,0,0)',
+            fillPatternImage: createImage(image),
+            // fillPatternOffset: { x: 400, y: 400 },
             stroke: 'black',
             strokeWidth: 3,
             draggable: true,
@@ -147,8 +166,7 @@ export default {
 
         verticalBar.on('dragmove', function() {
             // delta in %
-            const availableHeight =
-            stage.height() - PADDING * 10 - verticalBar.height();
+            const availableHeight = stage.height() - PADDING * 10 - verticalBar.height();
             var delta = (verticalBar.y() - PADDING * 20) / availableHeight;
 
             layer.y(-stage.height() * delta);
