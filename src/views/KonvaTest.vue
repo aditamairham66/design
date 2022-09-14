@@ -56,22 +56,26 @@
             bottom
         </div>
 
-        <v-stage :config="configKonva">
+        <!-- <v-stage :config="configKonva">
             <v-layer>
-                <!-- <v-circle :config="configCircle"></v-circle> -->
 
                 <v-rect
                     :config="rectConfig"
                 />
             </v-layer>
-        </v-stage>
+        </v-stage> -->
+
+        <div id="container"></div>
     </div>
 </template>
 
 <script>
 import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/outline'
-// import tshirt from '@/assets/tshirt.jpg'
+import Konva from 'konva';
 
+const width = window.innerWidth;
+const height = window.innerHeight;
+const PADDING = 5
 export default {
     name: 'konvaTest',
     components: {
@@ -80,30 +84,76 @@ export default {
     },
     data() {
         return {
-            configKonva: {
-                width: window.innerWidth,
-                height: window.innerHeight
-            },
-            configCircle: {
-                x: window.innerWidth/2,
-                y: window.innerHeight/4,
-                radius: 70,
-                fill: "red",
-                stroke: "black",
-                strokeWidth: 4,
-                draggable: true
-            },
-            rectConfig: {
-                x: window.innerWidth/3,
-                y: window.innerHeight/5,
-                width: Math.abs(850),
-                height: Math.abs(850),
-                fill: 'rgb(0,0,0,0)',
-                stroke: 'black',
-                strokeWidth: 3,
-                draggable: true,
-            }
+            // configKonva: {
+            //     width: width,
+            //     height: height
+            // },
+            // rectConfig: {
+            //     x: width/3,
+            //     y: height/5,
+            //     width: Math.abs(850),
+            //     height: Math.abs(850),
+            //     fill: 'rgb(0,0,0,0)',
+            //     stroke: 'black',
+            //     strokeWidth: 3,
+            //     draggable: true,
+            // },
         }
+    },
+    mounted() {
+        const stage = new Konva.Stage({
+            container: 'container',
+            width: width,
+            height: height
+        });
+
+        const layer = new Konva.Layer();
+        stage.add(layer);
+
+        const rectConfig = new Konva.Rect({
+            x: width/3,
+            y: height/5,
+            width: Math.abs(850),
+            height: Math.abs(850),
+            fill: 'rgb(0,0,0,0)',
+            stroke: 'black',
+            strokeWidth: 3,
+            draggable: true,
+        });
+        layer.add(rectConfig);
+    
+        const scrollLayers = new Konva.Layer();
+        stage.add(scrollLayers);
+
+        const verticalBar = new Konva.Rect({
+            width: 10,
+            height: 100,
+            fill: 'grey',
+            opacity: 0.8,
+            x: stage.width() - PADDING - 10,
+            y: height/7,
+            draggable: true,
+            dragBoundFunc: function(pos) {
+                pos.x = stage.width() - PADDING - 10;
+                pos.y = Math.max(
+                    Math.min(pos.y, stage.height() - this.height() - PADDING),
+                    PADDING
+                );
+                return pos;
+            }
+        });
+        scrollLayers.add(verticalBar);
+        scrollLayers.draw();
+
+        verticalBar.on('dragmove', function() {
+            // delta in %
+            const availableHeight =
+            stage.height() - PADDING * 10 - verticalBar.height();
+            var delta = (verticalBar.y() - PADDING * 20) / availableHeight;
+
+            layer.y(-stage.height() * delta);
+            layer.batchDraw();
+        });
     }
 }
 </script>
