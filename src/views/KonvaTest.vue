@@ -49,13 +49,18 @@
         </div>
 
         <div class="right-container">
-            right
+
         </div>
 
         <div class="bottom-container">
             bottom
         </div>
 
+        <v-stage :config="configKonva">
+            <v-layer>
+                <v-circle :config="configCircle" draggable="true"></v-circle>
+            </v-layer>
+        </v-stage>
     </div>
 </template>
 
@@ -67,6 +72,22 @@ export default {
     components: {
         ChatBubbleBottomCenterTextIcon,
         PhotoIcon,
+    },
+    data() {
+        return {
+            configKonva: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            },
+            configCircle: {
+                x: 800,
+                y: 300,
+                radius: 70,
+                fill: "red",
+                stroke: "black",
+                strokeWidth: 4
+            }
+        }
     }
 }
 </script>
@@ -76,6 +97,10 @@ export default {
   
     body {
         background: #f8f8f8 !important;
+    }
+
+    canvas {
+        margin: 109px 0px 88px 526px;
     }
   
     .sidebar-button {
@@ -257,17 +282,9 @@ export default {
         }
       }
   
-      .bottom-container {
-          bottom: 0;
-          width: 100%;
-      }
-  
-      .right-container {
-        right: 0;
-      }
-  
-      .left-container, 
-      .right-container {
+      .left-container,
+      .right-container
+       {
           height: calc(100vh - 90px - 52px);
           pointer-events: none;
           top: 90px;
@@ -277,9 +294,22 @@ export default {
   
       .bottom-container, 
       .left-container, 
-      .right-container {
+      .right-container
+       {
           position: fixed;
           z-index: 2;
+      }
+
+      .bottom-container {
+          bottom: 0;
+          width: 100%;
+      }
+  
+      .right-container {
+        // min-height: max-content;
+        right: 0;
+        // pointer-events: all;
+        // padding: 50px 50px;
       }
     }
 </style>
