@@ -77,6 +77,10 @@ export default {
   },
   data() {
     return {
+      canvas: {
+        width: null,
+        height: null,
+      }
     }
   },
   mounted() {
@@ -91,9 +95,6 @@ export default {
         // },
 
         controlsAboveOverlay : true,
-        // overlayColor: {
-        //   source: image,
-        // }
     })
     fabric.Object.prototype.transparentCorners = false
 
@@ -119,44 +120,44 @@ export default {
       canvas.setWidth(width)
       canvas.setHeight(height)
 
-      const boundingBox = new fabric.Rect({
-        fill: "white",
-        width: width/2,
-        height: height/2,
-        hasBorders: false,
-        hasControls: false,
-        lockMovementX: true,
-        lockMovementY: true,
-        evented: false,
-        stroke: "red"
-      })
-      canvas.add(boundingBox)
-      canvas.centerObject(boundingBox)
-
-      canvas.on('object:moving', (e) => {
-        var obj = e.target;
-
-        obj.set({
-          top: Math.min(Math.max(obj.top, 0), boundingBox.height - boundingBox.height),
-          left: Math.min(Math.max(obj.left, 0), boundingBox.width - boundingBox.width),
-        })
-        obj.setCoords();
-      });
-
-      // rect = new fabric.Rect({
-      //     top : width/5,
-      //     left : height/4,
-      //     width : width/2,
-      //     height : height/2,
-      //     // fill: 'rgba(0, 0, 0, 0)',
-      //     // selectable: false,
-      //     // stroke: 'rgba(0,255,0,1)',
-      //     // strokeWidth: 1,
-      //     // evented: false
+      // const boundingBox = new fabric.Rect({
+      //   fill: "white",
+      //   width: width/2,
+      //   height: height/2,
+      //   hasBorders: false,
+      //   hasControls: false,
+      //   lockMovementX: true,
+      //   lockMovementY: true,
+      //   evented: false,
+      //   stroke: "red"
       // })
+      // canvas.add(boundingBox)
+      // canvas.centerObject(boundingBox)
+
+      // canvas.on('object:moving', (e) => {
+      //   var obj = e.target;
+
+      //   obj.set({
+      //     top: Math.min(Math.max(obj.top, 0), boundingBox.height - boundingBox.height),
+      //     left: Math.min(Math.max(obj.left, 0), boundingBox.width - boundingBox.width),
+      //   })
+      //   obj.setCoords();
+      // });
+
+      const rect = new fabric.Rect({
+          top : width/5,
+          left : height/4,
+          width : width/2,
+          height : height/2,
+          // fill: 'rgba(0, 0, 0, 0)',
+          selectable: false,
+          // stroke: 'rgba(0,255,0,1)',
+          strokeWidth: 1,
+          // evented: false
+      })
       // canvas.clipPath = rect
-      // // canvas.add(rect)
-      // // canvas.centerObject(rect)
+      canvas.add(rect)
+      canvas.centerObject(rect)
 
 
       // canvas.on("mouse:down", function () {
@@ -170,6 +171,22 @@ export default {
       //   // ctx.save();
       // })
     })
+
+    canvas.on ("object:moving", function (event) {
+        var el = event.target;
+        console.log(el)
+
+        // suppose el coords is center based
+
+        // el.left = el.left < el.getBoundingRectWidth() / 2 ? el.getBoundingRectWidth() / 2 : el.left;
+        // el.top = el.top < el.getBoundingRectHeight () / 2 ? el.getBoundingRectHeight() / 2 : el.top;
+
+        // var right = el.left + el.getBoundingRectWidth() / 2;
+        // var bottom = el.top + el.getBoundingRectHeight() / 2;
+
+        // el.left = right > canvas.width - el.getBoundingRectWidth() / 2 ? canvas.width - el.getBoundingRectWidth() / 2 : el.left;
+        // el.top = bottom > canvas.height - el.getBoundingRectHeight() / 2 ? canvas.height - el.getBoundingRectHeight() / 2 : el.top;
+    });
 
     // canvas.on("mouse : up",function(){
     //   ctx.restore(); //restore the context
@@ -224,6 +241,14 @@ export default {
     addRect() {
       // console.log(canvas)
       const obj = new fabric.Rect({ top: Math.random()*100, left: Math.random()*100, width: 50, height: 50, fill: '#234' })
+      obj.clipTo = function(ctx) {
+        ctx.rect(
+          this.width/5,
+          this.height/4,
+          this. width/2,
+          this.height/2,
+        );
+      }
       canvas.add(
         obj
       )

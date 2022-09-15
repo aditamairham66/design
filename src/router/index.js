@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
-import KonvaTest from '../views/KonvaTest.vue'
+import HomeView from '../views/HomeView.vue'
+// import KonvaTest from '../views/KonvaTest.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    // component: HomeView
-    component: KonvaTest
+    component: HomeView
+    // component: KonvaTest
   }
 ]
 
