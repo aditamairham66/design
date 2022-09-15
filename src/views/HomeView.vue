@@ -64,6 +64,10 @@ import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/out
 import image from '@/assets/tshirt.jpg'
 import PanelLeft from '@/components/PanelLeft'
 
+const width = window.innerWidth
+const height = window.innerHeight
+
+console.log(width)
 let canvas
 // let rect
 // let ctx
@@ -85,9 +89,9 @@ export default {
   },
   mounted() {
     canvas = new fabric.Canvas('canvas',{
-        // width: 950,
-        // height: 550,
-        backgroundColor: 'white',
+        // width: width,
+        // height: height,
+        backgroundColor: '#f8f8f8',
         // preserveObjectStacking: true,
         // isDrawingMode: true,
         // overlayColor: {
@@ -97,28 +101,39 @@ export default {
         controlsAboveOverlay : true,
     })
     fabric.Object.prototype.transparentCorners = false
-
+    canvas.setWidth(width)
+    canvas.setHeight(height)
 
     fabric.Image.fromURL(image, function (img) {
       console.log(img)
 
-      const width = img.width
-      const height = img.height
+      const w = img.width
+      const h = img.height
 
-      // img.centeredScaling = true
-      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-        scaleX: 1,
-        scaleY: 1
-      })
-      // img.scale(0.5).set({
-      //   // left: 100,
-      //   // top: 100,
+      console.log(w, h)
+
+      img.centeredScaling = true
+      // canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+      //   scaleX: 1,
+      //   scaleY: 1
       // })
-      // img.scaleToWidth(300, false)
+      // canvas.setOverlayImage(img, canvas.renderAll.bind(canvas), {
+      //   // Needed to position overlayImage at 0/0
+      //   opacity: 0.5,
+      //   originX: 'left',
+      //   originY: 'top',
+      //   scaleX: 1,
+      //   scaleY: 1,
+      // })
+      img.scale(0.5).set({
+        width: height,
+        height: width,
+        // left: height,
+        // top: width/12,
+      })
+      img.scaleToWidth(300, false)
 
-      // canvas.insertAt(img, 0)
-      canvas.setWidth(width)
-      canvas.setHeight(height)
+      canvas.insertAt(img, 0)
 
       // const boundingBox = new fabric.Rect({
       //   fill: "white",
@@ -144,20 +159,20 @@ export default {
       //   obj.setCoords();
       // });
 
-      const rect = new fabric.Rect({
-          top : width/5,
-          left : height/4,
-          width : width/2,
-          height : height/2,
-          // fill: 'rgba(0, 0, 0, 0)',
-          selectable: false,
-          // stroke: 'rgba(0,255,0,1)',
-          strokeWidth: 1,
-          // evented: false
-      })
+      // const rect = new fabric.Rect({
+      //     top : width/5,
+      //     left : height/4,
+      //     width : width/2,
+      //     height : height/2,
+      //     // fill: 'rgba(0, 0, 0, 0)',
+      //     selectable: false,
+      //     // stroke: 'rgba(0,255,0,1)',
+      //     strokeWidth: 1,
+      //     // evented: false
+      // })
       // canvas.clipPath = rect
-      canvas.add(rect)
-      canvas.centerObject(rect)
+      // canvas.add(rect)
+      // canvas.centerObject(rect)
 
 
       // canvas.on("mouse:down", function () {
@@ -170,23 +185,48 @@ export default {
       //   // ctx.clip();
       //   // ctx.save();
       // })
+
+      // const rect = new fabric.Rect({
+      //     top : width/5,
+      //     left : height/4,
+      //     width : width/2,
+      //     height : height/2,
+      //     fill: 'green',
+      //     selectable: false,
+      //     strokeWidth: 1,
+      // })
+      // const cliptObj = new fabric.Rect({
+      //     // top : 0,
+      //     // left : 0,
+      //     width : width,
+      //     height : height,
+      //     fill : 'red'
+      // })
+      // const group = new fabric.Group([cliptObj, rect])
+      // canvas.add(group)
+      // canvas.centerObject(cliptObj)
+      // canvas.bringToFront(cliptObj)
     })
 
-    canvas.on ("object:moving", function (event) {
-        var el = event.target;
-        console.log(el)
+//     var h = new fabric.Rect({width: canvas.width, height: canvas.height, fill: 'rgba(0,0,0,0.5)'})
+// var z = new fabric.Circle({radius: 100, top:100, left: 100, globalCompositeOperation: 'destination-out'})
+// canvas.add(h).add(z)
 
-        // suppose el coords is center based
+    // canvas.on ("object:moving", function (event) {
+    //     var el = event.target;
+    //     console.log(el)
 
-        // el.left = el.left < el.getBoundingRectWidth() / 2 ? el.getBoundingRectWidth() / 2 : el.left;
-        // el.top = el.top < el.getBoundingRectHeight () / 2 ? el.getBoundingRectHeight() / 2 : el.top;
+    //     // suppose el coords is center based
 
-        // var right = el.left + el.getBoundingRectWidth() / 2;
-        // var bottom = el.top + el.getBoundingRectHeight() / 2;
+    //     // el.left = el.left < el.getBoundingRectWidth() / 2 ? el.getBoundingRectWidth() / 2 : el.left;
+    //     // el.top = el.top < el.getBoundingRectHeight () / 2 ? el.getBoundingRectHeight() / 2 : el.top;
 
-        // el.left = right > canvas.width - el.getBoundingRectWidth() / 2 ? canvas.width - el.getBoundingRectWidth() / 2 : el.left;
-        // el.top = bottom > canvas.height - el.getBoundingRectHeight() / 2 ? canvas.height - el.getBoundingRectHeight() / 2 : el.top;
-    });
+    //     // var right = el.left + el.getBoundingRectWidth() / 2;
+    //     // var bottom = el.top + el.getBoundingRectHeight() / 2;
+
+    //     // el.left = right > canvas.width - el.getBoundingRectWidth() / 2 ? canvas.width - el.getBoundingRectWidth() / 2 : el.left;
+    //     // el.top = bottom > canvas.height - el.getBoundingRectHeight() / 2 ? canvas.height - el.getBoundingRectHeight() / 2 : el.top;
+    // });
 
     // canvas.on("mouse : up",function(){
     //   ctx.restore(); //restore the context
@@ -211,16 +251,16 @@ export default {
     //   })
     // })
 
-    // const rectObj = new fabric.Rect({
-    //     top : 100,
-    //     left : 100,
-    //     width : 60,
-    //     height : 70,
-    //     fill : 'red'
-    //     // clipPath: rect
-    // })
-    // canvas.add(rectObj)
-    // canvas.centerObject(rectObj)
+    const rectObj = new fabric.Rect({
+        top : 100,
+        left : 100,
+        width : 60,
+        height : 70,
+        fill : 'blue'
+        // clipPath: rect
+    })
+    canvas.add(rectObj)
+    canvas.centerObject(rectObj)
 
     // canvas.setZoom(5)
 
@@ -270,8 +310,10 @@ export default {
   }
 
   canvas {
-    margin: 109px 0px 88px 526px;
+    // margin: 109px 0px 88px 526px;
+    // background: url(image) no-repeat;
   }
+
 
   .sidebar-button {
     background-color: unset;
