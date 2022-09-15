@@ -12,7 +12,8 @@
 
         <div class="sidebar-buttons sidebar-buttons-shown">
 
-          <button class="sidebar-button selected">
+          <button class="sidebar-button"
+           :class="(panel === 'text' ? 'selected': '')" @click="showPanel('text')">
             <div class="sidebar-button-icon">
               <ChatBubbleBottomCenterTextIcon/>
             </div>
@@ -21,7 +22,8 @@
             </div>
           </button>
 
-          <button class="sidebar-button">
+          <button class="sidebar-button"
+           :class="(panel === 'image' ? 'selected': '')" @click="showPanel('image')">
             <div class="sidebar-button-icon">
               <PhotoIcon/>
             </div>
@@ -32,18 +34,13 @@
 
         </div>
 
-        <div class="sidebar-panels sidebar-panels-shown">
-          <div class="floating-sidebar-panel button-icon-visibility">
-            
-            <div class="studio-panel-content studio-text-panel-content">
-              <h1 class="panel-title">Title Panel</h1>
-              <p class="panel-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        <PanelLeft title="Image" caption="lorem ipsum" nameRef="image" v-show="panel == 'image'" :show="panel">
+          <button @click="addRect">click</button>
+        </PanelLeft>
 
-              <button @click="addRect">click</button>
-            </div>
-
-          </div>
-        </div>
+        <PanelLeft title="Text" caption="lorem ipsum" nameRef="text" v-show="panel == 'text'" :show="panel">
+          <button @click="addRect">click</button>
+        </PanelLeft>
 
       </div>
     </div>
@@ -65,6 +62,7 @@
 import { fabric } from "fabric";
 import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/outline'
 import image from '@/assets/tshirt.jpg'
+import PanelLeft from '@/components/PanelLeft'
 
 let canvas
 // let rect
@@ -74,13 +72,15 @@ export default {
   components: {
     ChatBubbleBottomCenterTextIcon,
     PhotoIcon,
+    PanelLeft
   },
   data() {
     return {
       canvas: {
         width: null,
         height: null,
-      }
+      },
+      panel: 'image'
     }
   },
   mounted() {
@@ -253,7 +253,12 @@ export default {
         obj
       )
       canvas.centerObject(obj)
-    }
+    },
+
+
+    showPanel(name) {
+      this.panel = name
+    },
   }
 }
 </script>
