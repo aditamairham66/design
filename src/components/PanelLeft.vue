@@ -1,5 +1,5 @@
 <template>
-    <div class="sidebar-panels" :class="(nameRef === show ? 'sidebar-panels-shown' : '')">
+    <div class="sidebar-panels sidebar-panels-shown">
         <div class="floating-sidebar-panel button-icon-visibility">
         
         <div class="studio-panel-content studio-text-panel-content">
