@@ -51,9 +51,11 @@
       bottom
     </div>
 
-    <canvas id="canvas">
-      <!-- <img src="https://rb.gy/9ikyic" alt=""> -->
-    </canvas>
+    <!-- <div :style="{
+      backgroundImage: `url(${image})`
+    }"> -->
+      <canvas id="canvas"></canvas>
+    <!-- </div> -->
 
   </div>
 </template>
@@ -64,10 +66,10 @@ import { ChatBubbleBottomCenterTextIcon, PhotoIcon } from '@heroicons/vue/24/out
 import image from '@/assets/tshirt.jpg'
 import PanelLeft from '@/components/PanelLeft'
 
-const width = window.innerWidth
-const height = window.innerHeight
+// const width = window.innerWidth
+// const height = window.innerHeight
 
-console.log(width)
+// console.log(width)
 let canvas
 // let rect
 // let ctx
@@ -84,14 +86,15 @@ export default {
         width: null,
         height: null,
       },
-      panel: 'image'
+      panel: 'image',
+      image: image
     }
   },
   mounted() {
     canvas = new fabric.Canvas('canvas',{
         // width: width,
         // height: height,
-        backgroundColor: '#f8f8f8',
+        backgroundColor: 'white',
         // preserveObjectStacking: true,
         // isDrawingMode: true,
         // overlayColor: {
@@ -101,39 +104,39 @@ export default {
         controlsAboveOverlay : true,
     })
     fabric.Object.prototype.transparentCorners = false
-    canvas.setWidth(width)
-    canvas.setHeight(height)
+    // canvas.setWidth(width)
+    // canvas.setHeight(height)
 
     fabric.Image.fromURL(image, function (img) {
       console.log(img)
 
-      const w = img.width
-      const h = img.height
+      const width = img.width
+      const height = img.height
 
-      console.log(w, h)
-
-      img.centeredScaling = true
-      // canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-      //   scaleX: 1,
-      //   scaleY: 1
-      // })
+      canvas.setWidth(width)
+      canvas.setHeight(height)
+      // img.centeredScaling = true
+      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+        scaleX: 1,
+        scaleY: 1
+      })
       // canvas.setOverlayImage(img, canvas.renderAll.bind(canvas), {
       //   // Needed to position overlayImage at 0/0
-      //   opacity: 0.5,
+      //   opacity: 0.9,
       //   originX: 'left',
       //   originY: 'top',
       //   scaleX: 1,
       //   scaleY: 1,
       // })
-      img.scale(0.5).set({
-        width: height,
-        height: width,
-        // left: height,
-        // top: width/12,
-      })
-      img.scaleToWidth(300, false)
+      // img.scale(0.5).set({
+      //   width: height,
+      //   height: width,
+      //   // left: height,
+      //   // top: width/12,
+      // })
+      // img.scaleToWidth(300, false)
 
-      canvas.insertAt(img, 0)
+      // canvas.insertAt(img, 0)
 
       // const boundingBox = new fabric.Rect({
       //   fill: "white",
@@ -310,7 +313,7 @@ export default {
   }
 
   canvas {
-    // margin: 109px 0px 88px 526px;
+    margin: 109px 0px 88px 526px;
     // background: url(image) no-repeat;
   }
 
